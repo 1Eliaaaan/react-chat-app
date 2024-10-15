@@ -9,6 +9,8 @@ import { useEffect } from 'react'
 import { auth } from './lib/firebase'
 import { useUserStore } from './lib/userStore'
 import { useChatStore } from './lib/chatStore'
+import ChatContentLoader from './components/chat/contentLoader/contentLoader'
+import DetailContentLoader from './components/detail/detailContentLoader/detailContentLoader'
 
 
 function App() {
@@ -34,9 +36,9 @@ function App() {
         currentUser ? (
        <>
           <List/>
-         {chatId &&  <Chat/>}
-         {chatId && <Detail/>} 
-       </>
+         {chatId ? <Chat/> : <ChatContentLoader/>}
+         {chatId ? <Detail/> : <DetailContentLoader/>} 
+       </> 
         ) : (
           <Login/>
         )

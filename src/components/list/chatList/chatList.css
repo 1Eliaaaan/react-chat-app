@@ -1,71 +1,115 @@
 .chatList {
-    flex:1;
-    overflow: scroll;
-    .search {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        padding: 20px;
-        .searchBar {
-            flex:1;
-            background-color: rgba(0, 0, 0, 0.359);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border-radius: 10px;
+  flex: 1;
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 25px;
+    .searchBar {
+      height: 45px;
+      flex: 1;
+      background-color: rgb(255, 255, 255);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 10px -5px #000000;
 
-            input{
-                background-color: transparent;
-                border: none;
-                outline: none;
-                color: white;
-                flex: 1;
-            }
-            .searchIcon{
-                width: 36px;
-                height: 36px;
-            }
-   
-        }
-        .addIcon{
-            width: 36px;
-            height: 36px;
-            background-color: rgba(0, 0, 0, 0.359);
-            padding: 9px;
-            border-radius: 10px;
-            cursor: pointer;
-           
-
-
-        }
+      input {
+        border: none;
+        outline: none;
+        background-color: rgb(255, 255, 255);
+        flex: 1;
+      }
+      input::placeholder {
+        color: rgb(155, 155, 155);
+        text-indent: 0px;
+      }
+      .searchIcon {
+        color: rgb(155, 155, 155);
+        padding-left: 8px;
+        width: 30px;
+        height: 30px;
+      }
     }
-    .item {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        padding: 20px;
-        cursor: pointer;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.359);
- 
-        img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        
-        .texts {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-
-            span {
-                font-weight: 500;
-            }
-            p{
-                font-size: 14px;
-                font-weight: 300;
-            }
-        }
+    .addIcon {
+      width: 36px;
+      height: 36px;
+      color: rgb(155, 155, 155);
+      padding: 9px;
+      border-radius: 10px;
+      cursor: pointer;
     }
+    .addIcon:hover {
+      background-color: rgba(0, 0, 0, 0.264);
+    }
+  }
+  .chats {
+    overflow: hidden scroll;
+    height: 70vh;
+  }
+  .item {
+    margin-left: 8px;
+    margin-right: 8px;
+    display: flex;
+    gap: 10px;
+    padding: 30px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.359);
+    flex-direction: row;
+    align-items: center; /* Alinea elementos verticalmente */
+    background-color: #232d3f;
+    transition: background-color 0.3s ease;
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .texts {
+      flex: 1;
+      gap: 10px;
+
+      span {
+        font-size: 12px;
+        font-weight: 500;
+      }
+      p {
+        font-size: 14px;
+        font-weight: 300;
+      }
+    }
+    .time-container {
+      display: flex;
+      flex-direction: column; /* Coloca la fecha y el círculo en columna */
+      align-items: flex-end; /* Alinea el contenido a la derecha */
+    }
+    .time {
+      color: rgb(255, 255, 255);
+      font-size: 10px;
+    }
+
+    .circle {
+      width: 20px; /* Tamaño del círculo */
+      height: 20px; /* Tamaño del círculo */
+      background-color: #433878; /* Color del círculo */
+      border-radius: 50%; /* Hace que el div sea circular */
+      display: flex;
+      align-items: center;
+      justify-content: center; /* Centra el contenido dentro del círculo */
+      color: white; /* Color del texto */
+      font-size: 12px; /* Tamaño del texto */
+      margin-top: 5px; /* Espacio entre el time y el círculo */
+      span {
+        font-size: 8px;
+      }
+    }
+  }
+  .item:hover {
+    background-color: black;
+  }
+  .item.selected {
+    background-color: black;
+  }
 }

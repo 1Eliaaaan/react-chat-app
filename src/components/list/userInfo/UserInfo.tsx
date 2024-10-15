@@ -1,6 +1,6 @@
 import { useUserStore } from "../../../lib/userStore";
 import "./userInfo.css"
-import { AiOutlineEdit, AiOutlineMore,AiOutlineVideoCameraAdd  } from "react-icons/ai";
+import { AiOutlineBell, AiOutlineSetting } from "react-icons/ai";
 const UserInfo = () => {
 
     const {currentUser} = useUserStore();
@@ -9,14 +9,14 @@ const UserInfo = () => {
         <div className="userInfo">
         <div className="user">
             <img src={currentUser.avatar || "/src/assets/avatar.png"} alt="" />
-            <h2>{currentUser.username}</h2>
+            <h2 className="userName">{currentUser.username}</h2>
         </div>
-        <div className="icons">
-        <AiOutlineMore />
-        <AiOutlineVideoCameraAdd />
-        <AiOutlineEdit />
-            <img src="./edit.png" alt="" />
-        </div>
+   
+            <div className="icons">
+            <AiOutlineBell className="icon"/>
+            <AiOutlineSetting className="icon"/>
+            </div>
+
         </div>
     )
 }

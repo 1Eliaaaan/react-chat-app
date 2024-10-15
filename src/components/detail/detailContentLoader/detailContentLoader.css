@@ -1,0 +1,6 @@
+.detail {
+    flex : 1;
+    background-color: rgba(217, 217, 217, 0.06);
+    margin : 20px 20px 30px 0px;
+    border-radius: 30px;
+}

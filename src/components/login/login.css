@@ -1,71 +1,126 @@
-.login{
+.login {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
-    gap: 100px;
+    font-family: Sans-Serif;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+    box-shadow: 3px 3px 5px 6px #ccc;
+    border-radius: 30px;
+}
 
-    .item{
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
+.item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    min-width: 300px; /* Ancho mínimo para cada item */
+    
+}
 
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
+.title {
+    font-size: 12px;
+    text-decoration: underline;
+}
 
-            input {
-                padding: 20px;
-                border:none;
-                outline: none;
-                background-color: rgba(0, 0, 0, 0.52);
-                color: white;
-                border-radius: 5px;
-            }
+form {
+    width: 100%; /* Asegúrate de que el formulario use todo el ancho disponible */
+    max-width: 400px; /* Ancho máximo para pantallas más grandes */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-y: auto; /* Habilita el desplazamiento */
+    max-height: 400px; /* Establece una altura máxima para el formulario */
+}
 
-            label {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                cursor: pointer;
-                text-decoration: underline;
+input {
+    padding: 6px;
+    outline: none;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    border: 1px solid rgb(213, 213, 213);
+    text-indent: 8px;
+}
 
-                img{
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 5px;
-                    object-fit: cover;
-                    opacity: 0.6;
-                }
+input::placeholder {
+    color: rgb(213, 213, 213);
+}
 
-            }
+label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    text-decoration: underline;
+}
 
-            button{
-                width: 100%;
-                padding: 20px;
-                border: none;
-                background-color: #1f8ef1;
-                color: white;
-                border-radius: 5px;
-                cursor: pointer;
-                font-weight: 500;
+img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    object-fit: cover;
+    opacity: 0.6;
+}
 
-                &:disabled{
-                    cursor: not-allowed;
-                    background-color: #1f8ff19c;
-                }
-            }
-        }
+button {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    background-color: #232D3F;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:disabled {
+        cursor: not-allowed;
+        background-color: #1f8ff19c;
     }
+}
+
+.subtitle {
+    text-align: left;
+    color: black;
+    font-size: 12px;
+}
+
+/* Separador */
+.separator {
+    height: 80%;
+    width: 1px;
+    background-color: white;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .login {
+        flex-direction: column; /* Cambia a columna en pantallas más pequeñas */
+        align-items: center; /* Centra los elementos */
+    }
+
     .separator {
-        height: 80%;
-        width: 2px;
-        background-color: #dddddd35;
+        display: none; /* Oculta el separador en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    form {
+        max-width: 60%; /* Cambia a 90% en lugar de 100% para que sea más pequeño */
+        max-height: 80vh; /* Altura máxima para permitir desplazamiento */
+    }
+
+    .item {
+        gap: 10px; /* Reduce el espacio entre los elementos */
+        flex : none;
+
+    }
+
+    .title {
+        font-size: 10px; /* Reduce el tamaño de la fuente en pantallas muy pequeñas */
     }
 }

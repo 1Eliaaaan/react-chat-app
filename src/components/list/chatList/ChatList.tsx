@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./chatList.css"
+import "./chatList.css";
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
 
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
@@ -8,98 +8,112 @@ import { useUserStore } from "../../../lib/userStore";
 import AddUser from "./addUser/AddUser";
 import { useChatStore } from "../../../lib/chatStore";
 const ChatList = () => {
+  const [chats, setChats] = useState<any>([]);
+  const [addMode, setAddMode] = useState(false);
+  const [selectedChat, setSelectedChat] = useState<string | null>(null);
 
-    const [chats, setChats] = useState <any>([])
-    const [addMode, setAddMode] = useState(false)
+  const { currentUser } = useUserStore();
+  const { changeChat } = useChatStore();
 
-    const { currentUser } = useUserStore()
-    const {  changeChat    } = useChatStore()
+  useEffect(() => {
+    const unSub = onSnapshot(
+      doc(db, "userchats", currentUser.id),
+      async (res) => {
+        const items = res.data()!.chats;
 
-    useEffect(() => {
-        const unSub = onSnapshot(
-            doc(db, "userchats", currentUser.id),
-            async (res) => {
-                const items = res.data()!.chats;
+        const promises = items.map(async (item: any) => {
+          const userDocRef = doc(db, "users", item.receiverId);
+          const userDocSnap = await getDoc(userDocRef);
 
-                const promises = items.map(async (item: any) => {
-                    const userDocRef = doc(db, "users", item.receiverId);
-                    const userDocSnap = await getDoc(userDocRef);
+          const user = userDocSnap.data();
 
-                    const user = userDocSnap.data();
+          return { ...item, user };
+        });
 
-                    return { ...item, user }
-                });
+        const chatData = await Promise.all(promises);
 
-                const chatData = await Promise.all(promises)
+        setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt));
+      }
+    );
+    return () => {
+      unSub();
+    };
+  }, [currentUser.id]);
 
-                setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt));
+  function formatTime(epoch: number) {
+    const date = new Date(epoch * 1000);
+    return date.toLocaleString().split(",")[1];
+  }
 
-            }
-        );
-        return () => {
-            unSub();
-        }
-    }, [currentUser.id])
+  const handleSelect = async (chat: any) => {
+    setSelectedChat(chat.chatId);
+    const userChats = chats.map((item: any) => {
+      const { user, ...rest } = item;
+      return rest;
+    });
 
-    const handleSelect = async (chat : any) => {
-        const userChats = chats.map((item : any)=>{
-            const {user, ...rest }  = item;
-            return rest;
-        })
+    const chatIndex = userChats.findIndex(
+      (item: any) => item.chatId === chat.chatId
+    );
 
-        const chatIndex = userChats.findIndex((item : any)=> item.chatId === chat.chatId);
+    userChats[chatIndex].isSeen = true;
 
-        userChats[chatIndex].isSeen = true;
- 
+    const userChatsRef = doc(db, "userchats", currentUser.id);
 
-        const userChatsRef = doc(db,"userchats",currentUser.id);
-
-        try {
-            await updateDoc(userChatsRef, {
-                chats: userChats,
-
-            })
-            changeChat(chat.chatId,chat.user)
-        } catch (error) {
-            console.log(error)
-        }
-
-        
+    try {
+      await updateDoc(userChatsRef, {
+        chats: userChats,
+      });
+      changeChat(chat.chatId, chat.user);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-
-    return (
-        <div className="chatList">
-            <div className="search">
-                <div className="searchBar">
-                    <AiOutlineSearch className="searchIcon" />
-                    <input type="text" placeholder="Search" />
-                </div>
-                <div className="addIcon" onClick={() => setAddMode((prev: boolean) => !prev)}>
-                    {
-                        !addMode ? (<AiOutlinePlus
-                        />) : (<AiOutlineMinus />)
-                    }
-                </div>
-            </div>
-            {chats.map((chat : any) => (
-                <div className="item" 
-                key={chat.chatId} 
-                onClick={() =>handleSelect(chat)}
-                style={{backgroundColor : chat?.isSeen? "transparent" : "#5183fe"}}
-                >
-                    <img src={chat.user.avatar || "/src/assets/avatar.png"} alt="" />
-                    <div className="texts">
-                        <span>{chat.user.username}</span>
-                        <p>{chat.lastMessage}</p>
-                    </div>
-                </div>
-            ))}
-
-
-
-            {addMode && <AddUser />}
+  return (
+    <div className="chatList">
+      <div className="search">
+        <div className="searchBar">
+          <AiOutlineSearch className="searchIcon" />
+          <input type="text" placeholder="Search" />
+          <div
+            className="addIcon"
+            onClick={() => setAddMode((prev: boolean) => !prev)}
+          >
+            {!addMode ? <AiOutlinePlus /> : <AiOutlineMinus />}
+          </div>
         </div>
-    )
-}
-export default ChatList
+      </div>
+      <div className="chats">
+        {chats.map((chat: any) => (
+          <div
+            className={`item ${selectedChat === chat.chatId ? "selected" : ""}`}
+            key={chat.chatId}
+            onClick={() => handleSelect(chat)}
+          >
+            <img src={chat.user.avatar || "/src/assets/avatar.png"} alt="" />
+            <div className="texts">
+              <span>{chat.user.username}</span>
+              <p>{chat.lastMessage}</p>
+            </div>
+            <div className="time-container">
+              {" "}
+              {/* Nuevo contenedor */}
+              <div className="time">
+                <span>{formatTime(chat.updatedAt)}</span>
+              </div>
+              {chat.isSeen ?? (
+                <div className="circle">
+                  <span>1</span> {/* Contador de mensajes no leídos */}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {addMode && <AddUser />}
+    </div>
+  );
+};
+export default ChatList;

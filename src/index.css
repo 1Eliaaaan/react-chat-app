@@ -2,10 +2,18 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif, 'Body Link';
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(176, 176, 176);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(58, 58, 58);
+  }
+
 body{
-  background-image: url('/src/assets/home_background.jpg');
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,10 +24,8 @@ body{
 .container {
   width: 80vw;
   height: 90vh;
-  background-color: rgba(17,25,40,0.75 );
-  backdrop-filter: blur(3px) saturate(180%);
-  border : 1px solid rgba(17,25,40,0.75 );;
-  border-radius: 12px;
+  background-color: #433878;
+  border-radius: 30px;
   display: flex;
 } 
 
