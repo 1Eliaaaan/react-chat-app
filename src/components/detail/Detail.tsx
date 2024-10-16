@@ -1,104 +1,142 @@
-import { AiOutlineDown, AiOutlineDownload } from "react-icons/ai"
-import "./detail.css"
-import { auth, db } from "../../lib/firebase"
-import { useChatStore } from "../../lib/chatStore"
-import { useUserStore } from "../../lib/userStore"
-import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore"
+import { AiOutlineDown, AiOutlineDownload } from "react-icons/ai";
+import "./detail.css";
+import { auth, db } from "../../lib/firebase";
+import { useChatStore } from "../../lib/chatStore";
+import { useUserStore } from "../../lib/userStore";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { BsChevronDown, BsChevronUp } from "react-icons/bs";
+import { useState } from "react";
 const Detail = () => {
+  const {
+    user,
+    isCurrentUserBlocked,
+    isReceiverBlocked,
+    changeBlock,
+    messages,
+    resetChat,
+  } = useChatStore();
+  const { currentUser } = useUserStore();
+  const [expandedOption, setExpandedOption] = useState<String | null>(null);
+  const handleBlock = async () => {
+    if (!user) return;
 
-    const {user,isCurrentUserBlocked,isReceiverBlocked, changeBlock} = useChatStore();
-    const { currentUser } = useUserStore();
+    const userDocRef = doc(db, "users", currentUser.id);
 
-    const handleBlock = async()=>{
-        if(!user) return;
+    try {
+      await updateDoc(userDocRef, {
+        blocked: isReceiverBlocked ? arrayRemove(user.id) : arrayUnion(user.id),
+      });
 
-        const userDocRef = doc(db,"users",currentUser.id)
-
-        try {
-            await updateDoc(userDocRef, {
-                blocked : isReceiverBlocked ? arrayRemove(user.id) : arrayUnion(user.id),
-            })
-
-            changeBlock()
-
-        } catch (error) {
-            console.log(error)
-        }
+      changeBlock();
+    } catch (error) {
+      console.log(error);
     }
-    return (
-        <div className="detail">
-            <div className="user">
-                <img src={user?.avatar || "/src/assets/avatar.png"} alt="" />
-                <h2>{user?.username}</h2>
-                <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-            <div className="info">
-                <div className="option">
-                    <div className="title">
-                        <span>Chat Settings</span>
-                        <AiOutlineDown className="arrowIcon"/>
-                    </div>
-                </div>
-                <div className="option">
-                    <div className="title">
-                        <span>Privacy & Help</span>
-                        <AiOutlineDown className="arrowIcon"/>
-                    </div>
-                </div>
-                <div className="option">
-                    <div className="title">
-                        <span>Shared Photos</span>
-                        <AiOutlineDown className="arrowIcon"/>
-                    </div>
-                    <div className="photos">
-                        <div className="photoItem">
-                       <div className="photoDetail">
-                       <img src="https://pbs.twimg.com/media/GPKQdLIakAAVLbO?format=jpg&name=900x900" alt="" />
-                            <span>photo_2024_2.png</span>
-                       </div>
-                       <AiOutlineDownload className="downloadIcon"/>
-                        </div>
-                        <div className="photoItem">
-                       <div className="photoDetail">
-                       <img src="https://pbs.twimg.com/media/GPKQdLIakAAVLbO?format=jpg&name=900x900" alt="" />
-                            <span>photo_2024_2.png</span>
-                       </div>
-                       <AiOutlineDownload className="downloadIcon"/>
-                        </div>
-                        <div className="photoItem">
-                       <div className="photoDetail">
-                       <img src="https://pbs.twimg.com/media/GPKQdLIakAAVLbO?format=jpg&name=900x900" alt="" />
-                            <span>photo_2024_2.png</span>
-                       </div>
-                       <AiOutlineDownload className="downloadIcon"/>
-                        </div>
-                        <div className="photoItem">
-                       <div className="photoDetail">
-                       <img src="https://pbs.twimg.com/media/GPKQdLIakAAVLbO?format=jpg&name=900x900" alt="" />
-                            <span>photo_2024_2.png</span>
-                       </div>
-                       <AiOutlineDownload className="downloadIcon"/>
-                        </div>
-                        <div className="photoItem">
-                       <div className="photoDetail">
-                       <img src="https://pbs.twimg.com/media/GPKQdLIakAAVLbO?format=jpg&name=900x900" alt="" />
-                            <span>photo_2024_2.png</span>
-                       </div>
-                       <AiOutlineDownload className="downloadIcon"/>
-                        </div>
-                    </div>
-                </div>
-                <div className="option">
-                    <div className="title">
-                        <span>Shared Files</span>
-                        <AiOutlineDown className="arrowIcon"/>
-                    </div>
-                  
-                </div>
-                <button onClick={()=>handleBlock()}>{isCurrentUserBlocked ? "You´re blocked" : isReceiverBlocked ? "User Blocked" : "Block User"}</button>
-                <button className="logout" onClick={()=>auth.signOut}>Logout</button>
-            </div>
+  };
+  const handleOptionClick = (option: string) => {
+    if (expandedOption === option) {
+      setExpandedOption(null);
+    } else {
+      setExpandedOption(option);
+    }
+  };
+  const handleLogout = () => {
+    auth.signOut();
+    resetChat();
+  };
+
+  return (
+    <div className="detail">
+      <div className="user">
+        <img src={user?.avatar || "/src/assets/avatar.png"} alt="" />
+        <h2>{user?.username}</h2>
+        <p>Lorem ipsum dolor sit amet.</p>
+      </div>
+      <div className="info">
+        <div
+          className="option"
+          onClick={() => handleOptionClick("chatSettings")}
+        >
+          <div className="optionTitle">
+            <span>Chat Settings</span>
+            {expandedOption === "chatSettings" ? (
+              <BsChevronUp className="arrowIcon" />
+            ) : (
+              <BsChevronDown className="arrowIcon" />
+            )}
+          </div>
         </div>
-    )
-}
-export default Detail
+        <div
+          className="option"
+          onClick={() => handleOptionClick("privacyHelp")}
+        >
+          <div className="optionTitle">
+            <span>Privacy & Help</span>
+            {expandedOption === "privacyHelp" ? (
+              <BsChevronUp className="arrowIcon" />
+            ) : (
+              <BsChevronDown className="arrowIcon" />
+            )}
+          </div>
+        </div>
+        <div
+          className="option"
+          onClick={() => handleOptionClick("sharedPhotos")}
+        >
+          {expandedOption === "sharedPhotos" ? (
+            <div className="optionTitle">
+              <span>Shared Photos</span>
+              <BsChevronUp className="arrowIcon" />
+            </div>
+          ) : (
+            <div className="optionTitle">
+              <span>Shared Photos</span>
+              <BsChevronDown className="arrowIcon" />
+            </div>
+          )}
+        </div>
+        {expandedOption === "sharedPhotos" ? (
+          <div>
+            <div className="photos">
+              {messages
+                .filter((message: any) => message.img)
+                .map((message: any) => (
+                  <div className="photoItem" key={message.id}>
+                    <div className="photoDetail">
+                      <img src={message.img} alt="" />
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+
+        <div
+          className="option"
+          onClick={() => handleOptionClick("sharedFiles")}
+        >
+          <div className="optionTitle">
+            <span>Shared Files</span>
+            {expandedOption === "sharedFiles" ? (
+              <BsChevronUp className="arrowIcon" />
+            ) : (
+              <BsChevronDown className="arrowIcon" />
+            )}
+          </div>
+        </div>
+        <button onClick={() => handleBlock()}>
+          {isCurrentUserBlocked
+            ? "You´re blocked"
+            : isReceiverBlocked
+            ? "User Blocked"
+            : "Block User"}
+        </button>
+        <button className="logout" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
+    </div>
+  );
+};
+export default Detail;

@@ -9,7 +9,8 @@
     margin-top: 20px;
     margin-left: 30px;
     margin-right: 30px;
-    border-radius: 8px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
     padding: 10px;
     display: flex;
     align-items: center;
@@ -25,6 +26,7 @@
         height: 40px;
         border-radius: 50%;
         object-fit: cover;
+        opacity: 100;
       }
 
       .texts {
@@ -45,20 +47,22 @@
     .icons {
       display: flex;
       gap: 20px;
-
-      .phoneIcon,
-      .cameraIcon,
-      .infoIcon {
-        width: 25px;
-        height: 25px;
-        color: rgb(155, 155, 155);
-        border-radius: 10px;
+      .iconTopContainer {
+        width: 50px;
+        height: 50px;
         cursor: pointer;
+        border-radius: 10px;
+        .phoneIcon,
+        .cameraIcon,
+        .infoIcon {
+          margin: 12px 10px 10px 12px;
+          width: 25px;
+          height: 25px;
+          color: rgb(155, 155, 155);
+        }
       }
-      .phoneIcon:hover,
-      .cameraIcon:hover,
-      .infoIcon:hover {
-        background-color: rgba(187, 187, 187, 0.24);
+      .iconTopContainer:hover {
+        background-color: rgba(67, 56, 120, 1);
       }
     }
   }
@@ -67,7 +71,8 @@
     margin-top: 20px;
     margin-left: 30px;
     margin-right: 30px;
-    border-radius: 8px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
     padding: 10px;
     flex: 1;
     height: 60vh;
@@ -77,67 +82,80 @@
     gap: 20px;
 
     .message {
-      max-width: 70%;
+      max-width: 50%;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      .avatarImage {
+        .imgProfile {
+          width: 30px;
+          height: 30px;
+          border-radius: 50px;
+          opacity: 100;
+        }
+      }
+      .messageContainer {
+        word-wrap: break-word;
+        word-break: break-word;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 8px;
+        padding: 12px;
+        background-color: rgba(67, 56, 120, 1);
+        img {
+          width: 150px;
+          height: 200px;
+          opacity: 100;
+          margin-bottom: 10px;
+        }
+        p {
+          font-weight: 500;
 
-      gap: 20px;
+          font-size: 12px;
+          border-radius: 16px;
+          padding: 5px;
+        }
+      }
       isCurrentUserBlocked,
       isReceiverBlocked,
       &.own {
+        gap: 10px;
         align-self: flex-end;
-
-        .texts {
-          display: inline-flex;
-          align-items: center;
-          flex-direction: row-reverse;
-
-          p {
-            background-color: #ffffff;
-            color: black;
-          }
-          .imgProfile {
-            margin-left: 15px;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            object-fit: cover;
-          }
-        }
-      }
-
-      img {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-      .texts {
-        flex: 1;
         display: inline-flex;
-        gap: 5px;
         align-items: center;
-        img {
-          width: 100%;
-          height: 300px;
-          border-radius: 10px;
-          object-fit: cover;
+        flex-direction: row-reverse;
+        .avatarImage {
+          .imgProfile {
+            width: 30px;
+            height: 30px;
+            opacity: 100;
+            border-radius: 50px;
+          }
         }
-        p {
-          background-color: #1e1e1e;
-          padding: 20px;
-          border-radius: 10px;
-        }
-
-        span {
-          font-size: 13px;
-        }
-
-        .imgProfile {
-          width: 35px;
-          height: 35px;
-          border-radius: 50%;
-          margin-right: 15px;
-          margin-left: 15px;
-          object-fit: cover;
+        .messageContainer {
+          word-wrap: break-word;
+          word-break: break-word;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border-radius: 8px;
+          padding: 12px;
+          background-color: rgba(30, 30, 30, 1);
+          img {
+            width: 150px;
+            height: 200px;
+            margin-bottom: 10px;
+            opacity: 100;
+          }
+          p {
+            font-weight: 500;
+            font-size: 12px;
+            padding: 5px;
+            word-wrap: break-word;
+            overflow: hidden;
+          }
         }
       }
     }
@@ -150,7 +168,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-right: 1px solid rgba(0, 0, 0, 0.359);
+
     gap: 20px;
     .iconsBottom {
       display: flex;
@@ -176,52 +194,108 @@
     .input-container {
       display: flex;
       width: -webkit-fill-available;
-    }
-    input {
-      flex: 1;
-      background-color: rgba(0, 0, 0, 0.359);
-      border: none;
-      outline: none;
-      color: white;
-      padding: 20px;
-      border-radius: 10px 0px 0px 10px;
+      align-items: center;
+      .sendImgPreviewContainer {
+        width: fit-content;
+        height: 65px;
+        border-radius: 8px 0px 0px 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.359);
 
-      font-size: 16px;
+        .imageWrapper {
+          position: relative;
+          display: inline-block;
 
-      &:disabled {
-        cursor: not-allowed;
-      }
-    }
+          img {
+            margin-left: 10px;
+            margin-top: 7px;
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+          }
+          .removeImageIcon {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 58%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(30, 30, 30, 1);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            font-size: 18px;
+            cursor: pointer;
+          }
 
-    .sendButton {
-      background-color: rgba(0, 0, 0, 0.359);
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 0px 10px 10px 0px;
-      cursor: pointer;
-      width: 80px;
-      &:disabled {
-        background-color: #5183feb4;
-        cursor: not-allowed;
-      }
-      .inputButtonContainerIcon {
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-        display: inline-flex;
-        border-radius: 8px;
-        .inputButtonIcon {
-          width: 20px;
-          height: 20px;
-          cursor: pointer;
-          margin: auto;
+          &:hover .removeImageIcon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
         }
       }
-      .inputButtonContainerIcon:hover {
-        background-color: #232d3f;
+
+      input {
+        flex: 1;
+        background-color: rgba(0, 0, 0, 0.359);
+        border: none;
+        outline: none;
+        color: white;
+        height: 65px;
+
+        border-radius: 0px 0px 0px 0px;
+        font-size: 16px;
+
+        &:disabled {
+          cursor: not-allowed;
+        }
+      }
+
+      .sendButton {
+        background-color: rgba(0, 0, 0, 0.359);
+        color: white;
+        height: 65px;
+        border: none;
+        border-radius: 0px 10px 10px 0px;
+        cursor: pointer;
+        width: 80px;
+
+        &:disabled {
+          .inputButtonContainerIcon {
+            background-color: #ff0000b4;
+            cursor: not-allowed;
+            &:hover {
+              background-color: #ff0000b4;
+            }
+          }
+        }
+
+        .inputButtonContainerIcon {
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+          display: inline-flex;
+          border-radius: 8px;
+
+          .inputButtonIcon {
+            width: 20px;
+            height: 20px;
+            margin: auto;
+          }
+        }
+
+        .inputButtonContainerIcon:hover {
+          background-color: #232d3f;
+        }
       }
     }
+
     .emoji {
       margin: auto;
       position: relative;

@@ -2,7 +2,6 @@ import {
   AiOutlineAudio,
   AiOutlineCamera,
   AiOutlineFileAdd,
-  AiOutlineFileImage,
   AiOutlineInfoCircle,
   AiOutlinePhone,
   AiOutlineVideoCameraAdd,
@@ -33,8 +32,13 @@ const Chat = () => {
   });
   const endRef = useRef<HTMLDivElement>(null);
 
-  const { chatId, user, isReceiverBlocked, isCurrentUserBlocked } =
-    useChatStore();
+  const {
+    chatId,
+    user,
+    isReceiverBlocked,
+    isCurrentUserBlocked,
+    changeChatMessages,
+  } = useChatStore();
   const { currentUser } = useUserStore();
 
   useEffect(() => {
@@ -52,10 +56,20 @@ const Chat = () => {
       unSub();
     };
   }, [chatId]);
-  console.log("chat", chat);
+  useEffect(() => {
+    if (chat && chat.messages) {
+      changeChatMessages(chat.messages);
+    }
+  }, [chat]);
 
   const handleSend = async () => {
-    if (text === "") return;
+    console.log(text);
+    console.log(img);
+    if (text === "") {
+      if (!img.url) {
+        return;
+      }
+    }
 
     let imgUrl: any = "";
 
@@ -112,7 +126,6 @@ const Chat = () => {
     setText((prev) => prev + e.emoji);
     setOpen(false);
   };
-  console.log(text);
 
   const handleImg = (e: any) => {
     if (e.target.files[0]) {
@@ -134,9 +147,15 @@ const Chat = () => {
           </div>
         </div>
         <div className="icons">
-          <AiOutlinePhone className="phoneIcon" />
-          <AiOutlineVideoCameraAdd className="cameraIcon" />
-          <AiOutlineInfoCircle className="infoIcon" />
+          <div className="iconTopContainer">
+            <AiOutlinePhone className="phoneIcon" />
+          </div>
+          <div className="iconTopContainer">
+            <AiOutlineVideoCameraAdd className="cameraIcon" />
+          </div>
+          <div className="iconTopContainer">
+            <AiOutlineInfoCircle className="infoIcon" />
+          </div>
         </div>
       </div>
       <div className="center" ref={endRef}>
@@ -147,36 +166,30 @@ const Chat = () => {
             }
             key={message?.createdAt}
           >
-            {message.img && <img src={message.img} alt="" />}
-
-            <div className="texts">
-              {message.senderId === currentUser.id ? (
-                <div>
-                  <img
-                    src={currentUser.avatar || "/src/assets/avatar.png"}
-                    alt=""
-                    className="imgProfile"
-                  />
-                </div>
-              ) : (
+            {message.senderId === currentUser.id ? (
+              <div className="avatarImage">
+                <img
+                  src={currentUser.avatar || "/src/assets/avatar.png"}
+                  alt=""
+                  className="imgProfile"
+                />
+              </div>
+            ) : (
+              <div className="avatarImage">
                 <img
                   src={user.avatar || "/src/assets/avatar.png"}
                   alt=""
                   className="imgProfile"
                 />
-              )}
-              <p>{message.text}</p>
+              </div>
+            )}
+            <div className="messageContainer">
+              {message.img && <img src={message.img} alt="" />}
+              {message.text && <p className="text">{message.text}</p>}
               {/* <span>{message.createdAt}</span> */}
             </div>
           </div>
         ))}
-        {img.url && (
-          <div className="message own">
-            <div className="texts">
-              <img alt="" src={img.url} />
-            </div>
-          </div>
-        )}
       </div>
       <div className="bottom">
         <div className="iconsBottom">
@@ -200,12 +213,40 @@ const Chat = () => {
           </div>
         </div>
         <div className="input-container">
+          {img.url && (
+            <div className="sendImgPreviewContainer">
+              <div className="imageWrapper">
+                <img alt="" src={img.url} className="sendImagePreview" />
+                <span
+                  className="removeImageIcon"
+                  onClick={() => {
+                    setImg({
+                      file: null,
+                      url: "",
+                    });
+                  }}
+                >
+                  &times;
+                </span>
+              </div>
+            </div>
+          )}
           <input
             type="text"
             placeholder="Type a message..."
             onChange={(e) => setText(e.target.value)}
             value={text}
+            onKeyDown={(e) => {
+              if (
+                e.key === "Enter" &&
+                !isCurrentUserBlocked &&
+                !isReceiverBlocked
+              ) {
+                handleSend();
+              }
+            }}
           />
+
           <button
             className="sendButton"
             onClick={() => handleSend()}

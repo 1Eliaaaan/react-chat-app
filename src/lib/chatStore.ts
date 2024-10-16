@@ -9,7 +9,10 @@ type UserStore = {
     isCurrentUserBlocked : boolean,
     isReceiverBlocked : boolean,
     changeBlock : () => void;
-    changeChat : (chatId : any,user : any) => void;
+    resetChat: () => void;
+    changeChat : (chatId : any,user : any, selectedChat : any) => void;
+    changeChatMessages : (messages : any) => void;
+    messages : [];
 }
 
 export const useChatStore = create<UserStore>((set)=>({
@@ -17,9 +20,9 @@ export const useChatStore = create<UserStore>((set)=>({
     user : null,
     isCurrentUserBlocked : false,
     isReceiverBlocked : false,
-    changeChat : (chatId : any,user : any) => {
+    messages : [],
+    changeChat : (chatId : any, user : any) => {
         const currentUser = useUserStore.getState().currentUser;
-
         // CHECK IF CURRENT USER IS BLOCKED
 
         if(user.blocked.includes(currentUser.id)){
@@ -27,7 +30,7 @@ export const useChatStore = create<UserStore>((set)=>({
                 chatId,
                 user : null,
                 isCurrentUserBlocked : true,
-                isReceiverBlocked : false,
+                isReceiverBlocked : false
             })
         } else
 
@@ -39,26 +42,33 @@ export const useChatStore = create<UserStore>((set)=>({
                 chatId,
                 user : user,
                 isCurrentUserBlocked : false,
-                isReceiverBlocked : true,
+                isReceiverBlocked : true
             })
         } else {
             return set({
                 chatId,
                 user,
                 isCurrentUserBlocked : false,
-                isReceiverBlocked : false,
+                isReceiverBlocked : false
             })
         }
     },
-
     changeBlock : () => {
         set(state => ({
             ...state,isReceiverBlocked : !state.isReceiverBlocked 
         }))
-    }
-
-    
-
-
-
+    },
+    changeChatMessages : (chatMessages : any) => {
+        return set({
+            messages: chatMessages
+        })
+    },
+      resetChat: () => {
+    set({
+      chatId: null,
+      user: null,
+      isCurrentUserBlocked: false,
+      isReceiverBlocked: false,
+    });
+  }
 }))

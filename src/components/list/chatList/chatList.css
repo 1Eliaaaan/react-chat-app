@@ -3,54 +3,59 @@
   .search {
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 25px;
     .searchBar {
-      height: 45px;
+      height: max-content;
       flex: 1;
-      background-color: rgb(255, 255, 255);
+      background-color: rgba(0, 0, 0, 0.359);
       display: flex;
-      align-items: center;
-      gap: 10px;
-      border-radius: 8px;
-      box-shadow: 0px 4px 10px -5px #000000;
+      margin-left: 25px;
 
       input {
+        border-radius: 0px;
         border: none;
         outline: none;
-        background-color: rgb(255, 255, 255);
+        background-color: rgba(0, 0, 0, 0.359);
         flex: 1;
       }
       input::placeholder {
         color: rgb(155, 155, 155);
-        text-indent: 0px;
+        text-indent: 10px;
       }
-      .searchIcon {
+      .iconSearchContainer {
+        background-color: rgba(0, 0, 0, 0.359);
+        .searchIcon {
+          margin-top: 8px;
+          color: rgb(155, 155, 155);
+          padding-left: 8px;
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+    .addIconContainer {
+      background-color: rgba(0, 0, 0, 0.359);
+      .addIcon {
+        margin-top: 10px;
+        margin-right: 10px;
+        width: 25px;
+        height: 25px;
         color: rgb(155, 155, 155);
-        padding-left: 8px;
-        width: 30px;
-        height: 30px;
+        cursor: pointer;
+        border-radius: 6px;
       }
-    }
-    .addIcon {
-      width: 36px;
-      height: 36px;
-      color: rgb(155, 155, 155);
-      padding: 9px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .addIcon:hover {
-      background-color: rgba(0, 0, 0, 0.264);
+      .addIcon:hover {
+        background-color: rgba(35, 45, 63, 1);
+      }
     }
   }
   .chats {
     overflow: hidden scroll;
-    height: 70vh;
+    height: 75vh;
+    margin-left: 17px;
   }
   .item {
     margin-left: 8px;
-    margin-right: 8px;
+    max-width: 100%;
     display: flex;
     gap: 10px;
     padding: 30px;
@@ -65,12 +70,17 @@
       height: 40px;
       border-radius: 50%;
       object-fit: cover;
+      opacity: 100;
     }
 
     .texts {
       flex: 1;
       gap: 10px;
-
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1; /* Deja que el contenedor de texto ocupe todo el espacio disponible */
+      max-width: 200px; /* Limita el ancho del contenedor de texto */
+      overflow: hidden;
       span {
         font-size: 12px;
         font-weight: 500;
@@ -78,6 +88,9 @@
       p {
         font-size: 14px;
         font-weight: 300;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
     .time-container {

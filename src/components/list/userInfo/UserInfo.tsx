@@ -1,23 +1,25 @@
 import { useUserStore } from "../../../lib/userStore";
-import "./userInfo.css"
+import "./userInfo.css";
 import { AiOutlineBell, AiOutlineSetting } from "react-icons/ai";
 const UserInfo = () => {
+  const { currentUser } = useUserStore();
 
-    const {currentUser} = useUserStore();
+  return (
+    <div className="userInfo">
+      <div className="user">
+        <img src={currentUser.avatar || "/src/assets/avatar.png"} alt="" />
+        <h2 className="userName">{currentUser.username}</h2>
+      </div>
 
-    return (
-        <div className="userInfo">
-        <div className="user">
-            <img src={currentUser.avatar || "/src/assets/avatar.png"} alt="" />
-            <h2 className="userName">{currentUser.username}</h2>
+      <div className="iconsUserInfo">
+        <div className="iconsUserInfoContainer">
+          <AiOutlineBell className="iconUserInfo" />
         </div>
-   
-            <div className="icons">
-            <AiOutlineBell className="icon"/>
-            <AiOutlineSetting className="icon"/>
-            </div>
-
+        <div className="iconsUserInfoContainer">
+          <AiOutlineSetting className="iconUserInfo" />
         </div>
-    )
-}
-export default UserInfo
+      </div>
+    </div>
+  );
+};
+export default UserInfo;

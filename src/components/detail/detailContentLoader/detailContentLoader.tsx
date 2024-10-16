@@ -1,13 +1,6 @@
-
-import "./detailContentLoader.css"
+import "./detailContentLoader.css";
 
 const DetailContentLoader = () => {
-
-
-    return (
-        <div className="detail">
-          
-        </div>
-    )
-}
-export default DetailContentLoader
+  return <div className="detailContentLoader"></div>;
+};
+export default DetailContentLoader;

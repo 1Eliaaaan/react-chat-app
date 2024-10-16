@@ -10,7 +10,9 @@ import { useChatStore } from "../../../lib/chatStore";
 const ChatList = () => {
   const [chats, setChats] = useState<any>([]);
   const [addMode, setAddMode] = useState(false);
-  const [selectedChat, setSelectedChat] = useState<string | null>(null);
+  const [selectedChat, setSelectedChat] = useState<any>({
+    chatId: null,
+  });
 
   const { currentUser } = useUserStore();
   const { changeChat } = useChatStore();
@@ -46,7 +48,8 @@ const ChatList = () => {
   }
 
   const handleSelect = async (chat: any) => {
-    setSelectedChat(chat.chatId);
+    console.log("chat", chat);
+    setSelectedChat(chat);
     const userChats = chats.map((item: any) => {
       const { user, ...rest } = item;
       return rest;
@@ -64,7 +67,7 @@ const ChatList = () => {
       await updateDoc(userChatsRef, {
         chats: userChats,
       });
-      changeChat(chat.chatId, chat.user);
+      changeChat(chat.chatId, chat.user, selectedChat);
     } catch (error) {
       console.log(error);
     }
@@ -74,20 +77,28 @@ const ChatList = () => {
     <div className="chatList">
       <div className="search">
         <div className="searchBar">
-          <AiOutlineSearch className="searchIcon" />
+          <div className="iconSearchContainer">
+            <AiOutlineSearch className="searchIcon" />
+          </div>
           <input type="text" placeholder="Search" />
           <div
-            className="addIcon"
+            className="addIconContainer"
             onClick={() => setAddMode((prev: boolean) => !prev)}
           >
-            {!addMode ? <AiOutlinePlus /> : <AiOutlineMinus />}
+            {!addMode ? (
+              <AiOutlinePlus className="addIcon" />
+            ) : (
+              <AiOutlineMinus className="addIcon" />
+            )}
           </div>
         </div>
       </div>
       <div className="chats">
         {chats.map((chat: any) => (
           <div
-            className={`item ${selectedChat === chat.chatId ? "selected" : ""}`}
+            className={`item ${
+              selectedChat.chatId === chat.chatId ? "selected" : ""
+            }`}
             key={chat.chatId}
             onClick={() => handleSelect(chat)}
           >
