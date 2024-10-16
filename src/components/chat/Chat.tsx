@@ -22,6 +22,10 @@ import { useChatStore } from "../../lib/chatStore";
 import { useUserStore } from "../../lib/userStore";
 import upload from "../../lib/upload";
 
+enum Theme {
+  DARK = "dark",
+}
+
 const Chat = () => {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
@@ -266,7 +270,7 @@ const Chat = () => {
             <EmojiPicker
               open={open}
               onEmojiClick={handleEmoji}
-              theme={"dark"}
+              theme={Theme.DARK}
             />
           </div>
         </div>

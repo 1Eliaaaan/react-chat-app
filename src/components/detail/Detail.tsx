@@ -1,4 +1,3 @@
-import { AiOutlineDown, AiOutlineDownload } from "react-icons/ai";
 import "./detail.css";
 import { auth, db } from "../../lib/firebase";
 import { useChatStore } from "../../lib/chatStore";
