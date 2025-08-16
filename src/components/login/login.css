@@ -103,14 +103,14 @@ button {
 }
 
 /* Loader styles */
-.loader-container {
+.auth-button-loader-container {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
 
-.loader {
+.auth-button-loader {
   width: 16px;
   height: 16px;
   border: 2px solid rgb(106, 38, 233);

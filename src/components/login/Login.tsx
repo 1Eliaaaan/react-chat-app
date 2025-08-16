@@ -69,7 +69,15 @@ const Login = () => {
       });
 
       await setDoc(doc(db, "userchats", res.user.uid), { chats: [] });
-      toast.success("Account created! You can login now!");
+      
+      // After successful registration, automatically sign in and redirect
+      toast.success("Account created successfully! Redirecting to chat...");
+      
+      // Small delay to ensure Firestore documents are fully written
+      setTimeout(() => {
+        navigate('/chat');
+      }, 1000);
+      
     } catch (error: any) {
       toast.error(error.message);
     } finally {
@@ -86,8 +94,8 @@ const Login = () => {
           <input type="password" placeholder="Password" name="password" />
           <button disabled={loginLoading} className={loginLoading ? '' : ''}>
             {loginLoading ? (
-              <div className="loader-container">
-                <div className="loader"></div>
+              <div className="auth-button-loader-container">
+                <div className="auth-button-loader"></div>
 
               </div>
             ) : (

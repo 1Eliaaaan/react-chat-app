@@ -30,7 +30,7 @@ function App() {
   
   console.log("currentUser", currentUser)
   
-  if (isLoading) return <div className='loading'>Loading...</div>
+  if (isLoading) return <div className='loader'></div>
 
   return (
     <Router>
