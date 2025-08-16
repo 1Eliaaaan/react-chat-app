@@ -12,7 +12,8 @@ import upload from "../../lib/upload";
 
 const Login = () => {
   const [avatar, setAvatar] = useState({ file: null, url: "" });
-  const [loading, setLoading] = useState(false);
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [registerLoading, setRegisterLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleAvatar = (e: any) => {
@@ -26,7 +27,7 @@ const Login = () => {
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
-    setLoading(true);
+    setLoginLoading(true);
     const formData = new FormData(e.target);
     const { email, password } = Object.fromEntries(formData);
     try {
@@ -39,15 +40,15 @@ const Login = () => {
       navigate('/chat');
     } catch (error: any) {
       console.log(error);
-      toast.error(error.message);
+      toast.error('Invalid email or password');
     } finally {
-      setLoading(false);
+      setLoginLoading(false);
     }
   };
 
   const handleRegister = async (e: any) => {
     e.preventDefault();
-    setLoading(true);
+    setRegisterLoading(true);
     const formData = new FormData(e.target);
     const { username, email, password } = Object.fromEntries(formData);
 
@@ -72,7 +73,7 @@ const Login = () => {
     } catch (error: any) {
       toast.error(error.message);
     } finally {
-      setLoading(false);
+      setRegisterLoading(false);
     }
   };
 
@@ -83,7 +84,16 @@ const Login = () => {
         <form onSubmit={handleLogin}>
           <input type="text" placeholder="Email" name="email" />
           <input type="password" placeholder="Password" name="password" />
-          <button disabled={loading}>{loading ? "Loading" : "Sign In"}</button>
+          <button disabled={loginLoading} className={loginLoading ? '' : ''}>
+            {loginLoading ? (
+              <div className="loader-container">
+                <div className="loader"></div>
+
+              </div>
+            ) : (
+              "Sign In"
+            )}
+          </button>
           <a className="subtitle" href="">
             Forgot Password?
           </a>
@@ -106,7 +116,16 @@ const Login = () => {
           <input type="text" placeholder="Username" name="username" />
           <input type="text" placeholder="Email" name="email" />
           <input type="password" placeholder="Password" name="password" />
-          <button disabled={loading}>{loading ? "Loading" : "Sign Up"}</button>
+          <button disabled={registerLoading} className={registerLoading ? '' : ''}>
+            {registerLoading ? (
+              <div className="loader-container">
+                <div className="loader"></div>
+          
+              </div>
+            ) : (
+              "Sign Up"
+            )}
+          </button>
         </form>
       </div>
     </div>

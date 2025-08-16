@@ -35,9 +35,18 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<div className='container'><Landing /></div>} />
+        <Route path="/" element={
+          <div className='container'>
+            <Landing />
+            <Notification />
+          </div>
+        } />
         <Route path="/login" element={
-          <div className='container'><Login /></div>} />
+          <div className='container'>
+            <Login />
+            <Notification />
+          </div>
+        } />
         <Route path="/chat" element={
           currentUser ? (
             <div className='container'>

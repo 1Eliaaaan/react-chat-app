@@ -15,7 +15,7 @@ const Landing: React.FC = () => {
         {/* Header Section */}
         <header className="landing-header">
           <div className="logo">
-            <span className="logo-icon">💬</span>
+            <img src="chat.svg" alt="" />
             <span className="logo-text">ChatApp</span>
           </div>
         </header>

@@ -63,7 +63,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.359);
     flex-direction: row;
     align-items: center; /* Alinea elementos verticalmente */
-    background-color: #232d3f;
+    background-color:   rgba(39, 5, 46, 0.527);
     transition: background-color 0.3s ease;
     img {
       width: 40px;
@@ -104,9 +104,10 @@
     }
 
     .circle {
+
       width: 20px; /* Tamaño del círculo */
       height: 20px; /* Tamaño del círculo */
-      background-color: #433878; /* Color del círculo */
+      background-color: #4338784b; /* Color del círculo */
       border-radius: 50%; /* Hace que el div sea circular */
       display: flex;
       align-items: center;
@@ -114,6 +115,7 @@
       color: white; /* Color del texto */
       font-size: 12px; /* Tamaño del texto */
       margin-top: 5px; /* Espacio entre el time y el círculo */
+   
       span {
         font-size: 8px;
       }
@@ -123,6 +125,6 @@
     background-color: black;
   }
   .item.selected {
-    background-color: black;
+    background-color: rgba(103, 4, 160, 0.164);
   }
 }
