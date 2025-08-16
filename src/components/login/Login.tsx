@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./login.css";
 import { toast } from "react-toastify";
 import {
@@ -12,6 +13,7 @@ import upload from "../../lib/upload";
 const Login = () => {
   const [avatar, setAvatar] = useState({ file: null, url: "" });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleAvatar = (e: any) => {
     if (e.target.files[0]) {
@@ -34,6 +36,7 @@ const Login = () => {
         password as string
       );
       toast.success("Login Successfully!");
+      navigate('/chat');
     } catch (error: any) {
       console.log(error);
       toast.error(error.message);

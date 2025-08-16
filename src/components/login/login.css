@@ -19,8 +19,12 @@
     
 }
 
+
+
+
+
 .title {
-    font-size: 12px;
+    font-size: 14px;
     text-decoration: underline;
 }
 
@@ -31,24 +35,24 @@ form {
     flex-direction: column;
     justify-content: center;
     gap: 20px;
-    background-color: white;
-    padding: 20px;
+    background-color: #251a5e;
+    padding: 30px;
     border-radius: 8px;
     overflow-y: auto; /* Habilita el desplazamiento */
     max-height: 400px; /* Establece una altura máxima para el formulario */
 }
 
 input {
-    padding: 6px;
+    padding: 12px;
     outline: none;
-    background-color: rgb(255, 255, 255);
+    background-color: #433878;
     border-radius: 8px;
-    border: 1px solid rgb(213, 213, 213);
+    border: 1px solid rgb(42, 41, 88);
     text-indent: 8px;
 }
 
 input::placeholder {
-    color: rgb(213, 213, 213);
+    color: rgb(101, 95, 182);
 }
 
 label {
@@ -85,7 +89,7 @@ button {
 
 .subtitle {
     text-align: left;
-    color: black;
+    color: rgb(109, 107, 212);
     font-size: 12px;
 }
 
