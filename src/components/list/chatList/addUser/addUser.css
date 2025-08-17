@@ -2,7 +2,7 @@
     width: max-content;
     height: max-content;
     padding: 30px;
-    background-color: rgba(0, 0, 0, 0.901);
+    background-color: rgba(0, 0, 0, 0.575);
     border-radius: 10px;
     position: absolute;
     top: 0;
@@ -11,52 +11,94 @@
     right: 0;
     margin: auto;
 
-    form {
+    .search-user-form {
         display: flex;
         gap: 20px;
-
+      
         input {
-            padding: 20px;
+            padding: 10;
             border-radius: 10px;
             border: none;
             outline: none;
         }
 
-        button {
-            padding: 20px;
+        .search-user-btn {
+            padding: 10px;
             border-radius: 10px;
-            background-color: #5183fe;
+            background-color: #460c9c7a;
             color: white;
             border: none;
             cursor: pointer;
-
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
         }
     }
-    .user{
-        margin-top: 50px;
+    .user {
         display: flex;
         align-items: center;
         justify-content: space-between;
-
-        .detail{
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            img{
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                object-fit: cover;
-            }
+        gap: 10px;
+        padding: 8px 0;
+      
+        .list-add-user-img {
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          object-fit: cover;
         }
-
-        button {
-            padding: 10px;
-            border-radius: 10px;
-            background-color: #5183fe;
-            color: white;
-            border: none;
-            cursor: pointer;
+      
+        .user-data {
+          display: flex;
+          flex-direction: column;
+          line-height: 1.2;
         }
-    }
+      
+        .user-name {
+          font-size: 14px;
+          font-weight: 500;
+        }
+      
+        .user-email {
+          font-size: 10px;
+          color: gray;
+        }
+      
+        .btn-container {
+          margin-left: auto; /* botón a la derecha en desktop */
+        }
+      
+        .add-user-btn {
+          padding: 8px 12px;
+          border-radius: 10px;
+          background-color: #460c9c7a;
+          color: white;
+          border: none;
+          cursor: pointer;
+          font-size: 12px;
+          white-space: nowrap;
+        }
+      
+        .add-user-btn:hover {
+          background-color: #460c9c0c;
+          outline: 1px solid #460c9c7a;
+        }
+      }
+      
+      /* 🔹 Responsivo: en móviles se apilan */
+      @media (max-width: 600px) {
+        .user {
+          flex-direction: column;       /* apila elementos */
+          align-items: flex-start;      /* alineación a la izquierda */
+        }
+      
+        .btn-container {
+          margin-left: 0;               /* quita el auto */
+          margin-top: 8px;              /* espacio respecto a los datos */
+          align-self: stretch;          /* hace que el botón ocupe todo el ancho */
+        }
+      
+        .add-user-btn {
+          width: 100%;                  /* full width en móviles */
+          text-align: center;
+        }
+      }
 }

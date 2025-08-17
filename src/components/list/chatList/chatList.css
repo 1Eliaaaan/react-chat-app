@@ -6,15 +6,15 @@
     .searchBar {
       height: max-content;
       flex: 1;
-      background-color: rgba(0, 0, 0, 0.359);
+      background-color: rgba(59, 17, 213, 0.263);
       display: flex;
-      margin-left: 25px;
+      margin-left: 25px;  
 
       input {
         border-radius: 0px;
         border: none;
         outline: none;
-        background-color: rgba(0, 0, 0, 0.359);
+        background-color: rgba(35, 35, 35, 0.608);
         flex: 1;
       }
       input::placeholder {
@@ -22,7 +22,7 @@
         text-indent: 10px;
       }
       .iconSearchContainer {
-        background-color: rgba(0, 0, 0, 0.359);
+        background-color: rgba(35, 35, 35, 0.608);
         .searchIcon {
           margin-top: 8px;
           color: rgb(155, 155, 155);
@@ -33,7 +33,7 @@
       }
     }
     .addIconContainer {
-      background-color: rgba(0, 0, 0, 0.359);
+      background-color: rgba(35, 35, 35, 0.608);
       .addIcon {
         margin-top: 10px;
         margin-right: 10px;
