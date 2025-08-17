@@ -99,7 +99,7 @@ const Login = () => {
                 <button onClick={() => setShowRegForm(false)} className="login-btn">{"< Back"}</button>
                 <label className="subtitle" htmlFor="file">
                   Upload an Image
-                  <img className="login-img" src={avatar.url || "/public/avatar.png"} alt="" />
+                  <img className="login-img" src={avatar.url || "/avatar.png"} alt="" />
                 </label>
                 <input
                   type="file"
@@ -182,7 +182,7 @@ const Login = () => {
           
             <label className="subtitle" htmlFor="file">
               Upload an Image
-              <img className="login-img" src={avatar.url || "/public/avatar.png"} alt="" />
+              <img className="login-img" src={avatar.url || "/avatar.png"} alt="" />
             </label>
             <input
               type="file"
