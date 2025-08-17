@@ -182,7 +182,7 @@ const Login = () => {
           
             <label className="subtitle" htmlFor="file">
               Upload an Image
-              <img className="login-img" src={avatar.url || "/src/assets/avatar.png"} alt="" />
+              <img className="login-img" src={avatar.url || "/public/avatar.png"} alt="" />
             </label>
             <input
               type="file"
