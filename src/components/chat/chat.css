@@ -1,6 +1,6 @@
 .chat {
   flex: 2;
-  height: 100%;
+  min-width: 0; /* evita que colapse con flexbox */
   display: flex;
   flex-direction: column;
 
@@ -161,8 +161,7 @@
     }
   }
   .bottom {
-   
-   
+
     margin-left: 30px;
     margin-right: 30px;
     margin-top: auto;
@@ -170,7 +169,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 20px;
     .iconsBottom {
       display: flex;

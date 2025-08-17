@@ -28,44 +28,42 @@ const AddUser = () =>{
       useEffect(() => {
         getUsers();
       }, []);
-    const handleAdd = async ()=> {
-
-            const chatRef = collection(db,"chats");
-            console.log("chatRef",chatRef)
-            const userChatsRef = collection(db,"userchats");
-            console.log("userChatsRef",userChatsRef)
+      const handleAdd = async (u: any)=> {
+        const chatRef = collection(db,"chats");
+        const userChatsRef = collection(db,"userchats");
+      
         try {
-           const newChatRef = doc(chatRef) 
-            await setDoc(newChatRef, 
-            {
-                createdAt : serverTimestamp(),
-                messagess : [],
-            }
-            );
-
-            await updateDoc(doc(userChatsRef, user?.id), {
-                chats :arrayUnion({
-                    chatId : newChatRef.id,
-                    lastMessage : "",
-                    receiverId :currentUser.id,
-                    updatedAt : Date.now()
-                })
+          const newChatRef = doc(chatRef);
+          await setDoc(newChatRef, {
+            createdAt : serverTimestamp(),
+            messagess : [],
+          });
+      
+          // chat para el usuario seleccionado
+          await updateDoc(doc(userChatsRef, u.id), {
+            chats : arrayUnion({
+              chatId : newChatRef.id,
+              lastMessage : "",
+              receiverId : currentUser.id,
+              updatedAt : Date.now()
             })
-
-            await updateDoc(doc(userChatsRef, currentUser.id), {
-                chats :arrayUnion({
-                    chatId : newChatRef.id,
-                    lastMessage : "",
-                    receiverId :user?.id,
-                    updatedAt : Date.now()
-                })
+          });
+      
+          // chat para el usuario actual
+          await updateDoc(doc(userChatsRef, currentUser.id), {
+            chats : arrayUnion({
+              chatId : newChatRef.id,
+              lastMessage : "",
+              receiverId : u.id,
+              updatedAt : Date.now()
             })
-
-            console.log(newChatRef.id)
+          });
+      
+          console.log(newChatRef.id)
         } catch (error) {
-            console.log(error)
+          console.log(error)
         }
-    }
+      }
         const handleSearch = async(e : any) => {
             e.preventDefault();
             const formData = new FormData(e.target)
