@@ -29,6 +29,7 @@ const AddUser = () =>{
         getUsers();
       }, []);
       const handleAdd = async (u: any)=> {
+    
         const chatRef = collection(db,"chats");
         const userChatsRef = collection(db,"userchats");
       
@@ -78,6 +79,7 @@ const AddUser = () =>{
 
                 if(!querySnapShop.empty){
                     setUser(querySnapShop.docs[0].data());
+                    console.log(user)
                 }
 
             } catch (error) {
